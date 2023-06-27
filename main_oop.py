@@ -18,8 +18,8 @@ class TranslateEpub:
     tag_exeption = ["code", 'a', 'strong', 'pre', 'span', 'html',
                     'body', "head", "em", "b", "i"]
 
-    def __init__(self, epub_path: str):
-
+    def __init__(self, epub_path: str, dest: str = 'ru'):
+        self.dest = dest
         self.book = epub.read_epub(epub_path)
         self.items_array = []
 
@@ -27,7 +27,7 @@ class TranslateEpub:
     @staticmethod
     def __translation_func(text):
         translator = Translator()
-        result = translator.translate(text, dest='ru')
+        result = translator.translate(text, dest=TranslateEpub.dest)
         return result.text
 
     def get_items(self, print_items=False, el_numbers: list[int] = [4, 9]) -> list:
